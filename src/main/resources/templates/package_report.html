@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Incoming Packages Report</title>
+    <!-- Employee Selection Form -->
+    <form method="get" action="/report">
+        <label for="employee">Select an Employee:</label>
+        <select id="employee" name="employee">
+            <option value="employee1">Lilia Kehaiova</option>
+            <option value="employee2">Martin Velkov</option>
+            <option value="employee3">Marian Emilov</option>
+            <!-- Add more options for each employee -->
+        </select>
+        <button type="submit">Generate Report</button>
+    </form>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        form {
+            margin: 20px; /* Add margin to create spacing */
+            padding: 10px; /* Add padding for visual separation */
+            border: 1px solid #ccc; /* Add a border for a box-like appearance */
+            border-radius: 5px; /* Rounded corners for aesthetics */
+            background-color: #f9f9f9; /* Light background color */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a subtle shadow for depth */
+            display: inline-block; /* Make the form inline for horizontal alignment */
+        }
+
+        label {
+            font-weight: bold; /* Make the label text bold */
+        }
+
+        select {
+            padding: 5px; /* Add padding to the dropdown */
+            margin-right: 10px; /* Add right margin for spacing */
+        }
+
+        button {
+            background-color: #007bff; /* Blue button color */
+            color: #fff; /* White text color */
+            border: none; /* Remove button border */
+            padding: 8px 15px; /* Add padding to the button */
+            border-radius: 3px; /* Rounded button corners */
+            cursor: pointer; /* Show a pointer cursor on hover */
+        }
+
+        button:hover {
+            background-color: #0056b3; /* Darker blue on hover */
+        }
+    </style>
+</head>
+<body>
+<h1>Incoming Packages</h1>
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Sender</th>
+        <th>Recipient</th>
+        <th>Delivery Address</th>
+        <th>Weight</th>
+        <th>Office Delivery</th>
+        <th>Price</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="package : ${incomingPackages}">
+        <td th:text="${package.id}"></td>
+        <td th:text="${package.sender}"></td>
+        <td th:text="${package.recipient}"></td>
+        <td th:text="${package.deliveryAddress}"></td>
+        <td th:text="${package.weight}"></td>
+        <td th:text="${package.isOfficeDelivery ? 'Yes' : 'No'}"></td>
+        <td th:text="${package.price}"></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
+

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Package Search</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #5D3FD3;
+        }
+        .search-container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            text-align: center;
+        }
+        .search-title {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        .search-field {
+            width: 80%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 2px solid #333;
+            border-radius: 4px;
+        }
+        .search-button {
+            padding: 10px 20px;
+            border: none;
+            background-color: #333;
+            color: white;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .search-button:hover {
+            background-color: #555;
+        }
+
+        .btn-back {
+  background-color: #4CAF50; /* Green color */
+  padding: 10px 20px; /* Adjust the padding as needed */
+  font-size: 16px; /* Adjust the font size as needed */
+  border-radius: 4px; /* Rounded corners */
+  text-decoration: none; /* Remove underline from link */
+  color: white; /* Text color */
+  position: absolute; /* Position it absolutely relative to its parent */
+  bottom: 20px; /* Distance from the bottom */
+  left: 20px; /* Distance from the left */
+  display: inline-block; /* Make it an inline-block element */
+  text-align: center; /* Center the text inside the button */
+  cursor: pointer; /* Add the pointer cursor to the link */
+}
+
+        .results-container {
+        max-width: 600px;
+        margin: 20px auto;
+        padding: 20px;
+        background-color: #fff;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        border-radius: 8px;
+        border: 2px solid #333; /* Make the box visible */
+        display: block; /* Show the container */
+        /* Adjust the height as needed, or remove if you want it to grow with content */
+        min-height: 150px;
+    }
+
+    .body-container {
+  position: relative; /* This makes the .btn-back position relative to this container */
+  padding-bottom: 60px; /* Add padding to the bottom to ensure there's space for the button */
+}
+    </style>
+</head>
+<body>
+<div class="body-container">
+    <div class="search-container">
+        <div class="search-title">Search Client</div>
+        <form action="#" th:action="@{/client/search}" method="post" id="searchForm">
+            <input type="text" class="search-field" id="searchTerm" name="searchTerm" placeholder=".  .  .  ." required pattern="^ALL$|^\d+$" title="Type 'ALL' or an ID number">
+            <input type="submit" value="Search" class="search-button">
+        </form>
+    </div>
+
+    <!-- Results container where the search results will be displayed -->
+
+    <div class="results-container" id="resultsContainer">
+        <div th:if="${not #lists.isEmpty(results)}" th:each="client : ${results}">
+            <!-- Display each package's details here -->
+            <p th:text=" 'Client ID: ' + ${client.id} + ', FirstName: ' + ${client.firstName} + ', LastName: ' + ${client.lastName} + ',  ContactNumber: ' + ${client.contactNumber}">Package details will be displayed here</p>
+        </div>
+        <div th:if="${#lists.isEmpty(results)}">
+            <!-- Message to show when there are no results -->
+            <p>No results found.</p>
+        </div>
+    </div>
+
+    <a href="/employeeUser_page.html" class="search-button btn-back" style="background-color: #4CAF50;">Back to Employee User Page</a>
+</div>
+</body>
+</html>

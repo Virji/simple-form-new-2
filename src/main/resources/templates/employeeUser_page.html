@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Management System</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-image: url("images/adminUserPage.png");
+            background-size: cover;
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-around;
+            height: 100vh;
+        }
+
+        .section {
+            margin-right: 20px;
+        }
+
+        .section span {
+            font-size: 29px;
+            color: white;
+        }
+
+        .dropdown-content, .dropdown-content-submenu {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+        }
+
+        .dropdown-content a, .dropdown-content-submenu a {
+            padding: 12px 16px;
+            display: block;
+            text-decoration: none;
+            color: #333;
+        }
+
+        .dropdown-content a:hover, .dropdown-content-submenu a:hover {
+            background-color: #f1f1f1;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .dropdown-submenu:hover .dropdown-content-submenu {
+            display: block;
+            left: 100%;
+            top: 0;
+        }
+
+        .logoff-container {
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            margin: 20px;
+        }
+
+        .logoff-button {
+            padding: 10px 15px;
+            background-color: #f44336;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .logoff-button:hover {
+            background-color: #c0392b;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="section dropdown">
+    <span>Package</span>
+    <div class="dropdown-content">
+        <a href="registerIncomingPackage_page.html">Register an incoming package</a>
+        <a href="registerOutgoingPackage_page.html">Register an outgoing package</a>
+    </div>
+</div>
+
+<div class="section dropdown">
+    <span>Search</span>
+    <div class="dropdown-content">
+        <div class="dropdown-submenu">
+            <a href="#">Search package</a>
+            <div class="dropdown-content-submenu">
+                <a href="searchIncomingPackage_page.html">Incoming</a>
+                <a href="searchOutgoingPackage_page.html">Outgoing</a>
+            </div>
+        </div>
+        <a href="searchClient_page.html">Search client</a>
+    </div>
+</div>
+
+<div class="logoff-container">
+    <a href="/login" class="logoff-button">Log Off</a>
+</div>
+
+</body>
+</html>

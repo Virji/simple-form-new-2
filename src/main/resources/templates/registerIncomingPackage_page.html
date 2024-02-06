@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Package Data Management</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <style>
+        .jumbotron {
+            background-color: #f0e595;
+        }
+        .priceResultBox {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            font-size: 20px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="jumbotron">
+        <div class="container-flow">
+            <h1>Package Data Management</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><strong>Search Package</strong></h3>
+                </div>
+                <div class="panel-body">
+                    <form action="#" th:action="@{/package/register_incoming}" method="post">
+                        <div class="form-group">
+                            <label for="sender">Sender Name:</label>
+                            <input type="text" class="form-control" id="sender" name="sender" placeholder="Sender Name">
+                        </div>
+                        <div class="form-group">
+                            <label for="recipient">Recipient:</label>
+                            <input type="text" class="form-control" id="recipient" name="recipient" placeholder="Recipient Name">
+                        </div>
+                        <div class="form-group">
+                            <label for="deliveryAddress">Delivery Address:</label>
+                            <input type="text" class="form-control" id="deliveryAddress" name="deliveryAddress" placeholder="Delivery Address">
+                        </div>
+                        <div class="checkbox">
+                            <label><input type="checkbox" id="isOfficeDelivery" name="isOfficeDelivery"> Office Delivery</label>
+                        </div>
+                        <div class="form-group">
+                            <label for="weight">Weight :</label>
+                            <input type="text" class="form-control" id="weight" name="weight" placeholder="Weight">
+                        </div>
+                        <input type="hidden" id="price" name="price" value=""> <!-- Hidden field for price -->
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <a href="/employeeUser_page.html" class="btn btn-success">Back to Employee User Page</a>
+                    </form>
+                    <!-- Result Box -->
+                    <div class="priceResultBox" id="priceResultBox">
+                        Price: <span id="priceValue">...</span> $
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Jquery ref -->
+<script src="https://code.jquery.com/jquery-3.1.0.min.js"
+        integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s="
+        crossorigin="anonymous"></script>
+<!-- Firebase ref -->
+<script src="https://www.gstatic.com/firebasejs/3.4.0/firebase.js"></script>
+<!-- Moment ref -->
+<script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
+<script>
+    function calculatePrice() {
+        //takes the weight from the input field
+        var weight = parseFloat(document.getElementById('weight').value.trim());
+        //checks if the officeDelivery box is checked or not
+        var isOfficeDelivery = document.getElementById('isOfficeDelivery').checked;
+
+        // Define base prices and rates
+        var basePrice = 5.0; // Base price regardless of the package weight
+        var perKilogramRate = 2.0; // Price per kilogram
+        var officeDeliveryDiscount = 5.0; // Discount for office delivery
+        var homeDeliveryCharge = 10.0; // Additional charge for home delivery
+
+        // Calculate the total weight price - input field we retrieved * kgPerRate - (2)
+        var weightPrice = weight * perKilogramRate;
+
+        // Based on if delivery is an Office or Home address with ternary operator set deliveryPrice to (-5 or +10 )
+        var deliveryPrice = isOfficeDelivery ? -officeDeliveryDiscount : homeDeliveryCharge;
+
+
+        var totalPriceWithoutDelivery = basePrice + weightPrice;
+
+        // basePrice + weight*kgPerRate + deliveryTax = TOTAL
+        if(isOfficeDelivery){
+        var totalPrice = totalPriceWithoutDelivery;
+        }else{
+             var totalPrice = basePrice + weightPrice + deliveryPrice ;
+        }
+
+
+
+        // Update the displayed price
+    document.getElementById('priceValue').textContent = totalPrice.toFixed(2);
+
+    // Update the hidden input field for price
+    document.getElementById('price').value = totalPrice.toFixed(2);
+}
+
+
+    // Attach the event listeners to the weight input and office delivery checkbox
+    document.getElementById('weight').addEventListener('input', calculatePrice);
+    document.getElementById('isOfficeDelivery').addEventListener('change', calculatePrice);
+
+    // Run the calculation when the page loads in case there are default values
+    document.addEventListener('DOMContentLoaded', calculatePrice);
+</script>
+</body>
+</html>

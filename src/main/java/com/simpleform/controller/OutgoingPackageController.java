@@ -95,13 +95,6 @@ public class OutgoingPackageController {
         }
     }
 
-    @GetMapping("/shipmentsSentByCustomer")
-    public String getShipmentsSentByCustomer(@RequestParam("customerId") Integer customerId, Model model) {
-        List<OutgoingPackage> shipments = packageService.getShipmentsSentByCustomer(customerId);
-        model.addAttribute("shipments", shipments);
-        return "shipments_sent_by_customer_page"; // Create a corresponding HTML page to display the results
-    }
-
 
 
 

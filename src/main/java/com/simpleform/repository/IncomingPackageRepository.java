@@ -1,5 +1,6 @@
 package com.simpleform.repository;
 
+import com.simpleform.entity.Employee;
 import com.simpleform.entity.IncomingPackage;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -13,6 +14,6 @@ public interface IncomingPackageRepository extends JpaRepository<IncomingPackage
     @Override
     Optional<IncomingPackage> findById(Integer id);
 
-
+    List<IncomingPackage> findByRegisteredBy(Employee employee);
 
 }

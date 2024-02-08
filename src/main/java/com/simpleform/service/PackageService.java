@@ -1,8 +1,10 @@
 package com.simpleform.service;
 import com.simpleform.entity.Client;
+import com.simpleform.entity.Employee;
 import com.simpleform.entity.IncomingPackage;
 import com.simpleform.entity.OutgoingPackage;
 import com.simpleform.repository.ClientRepository;
+import com.simpleform.repository.EmployeeRepository;
 import com.simpleform.repository.IncomingPackageRepository;
 import com.simpleform.repository.OutgoingPackageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +21,7 @@ public class PackageService {
     @Autowired
     OutgoingPackageRepository outgoingPackageRepository;
     @Autowired
-    private ClientRepository clientRepository;
+    EmployeeRepository employeeRepository;
 
     public void addIncomingPackageAdmin(IncomingPackage incomingPackage_){
         incomingPackageRepository.save(incomingPackage_);
@@ -98,18 +100,19 @@ public class PackageService {
     public List<OutgoingPackage> findAllOutgoingPackages() {
         return outgoingPackageRepository.findAll();
     }
-
-    public List<OutgoingPackage> getShipmentsSentByCustomer(Integer customerId) {
-        // Find the Client based on the provided customerId
-        Optional<Client> customer = clientRepository.findById(customerId);
-
-        if (customer.isPresent()) {
-            // Find all shipments sent by the customer using findBySender
-            return outgoingPackageRepository.findBySender(customer.get());
-        } else {
-            // Handle the case where the customer with the provided ID is not found
-            return Collections.emptyList();
-        }
+    public List<IncomingPackage> getAllPackages() {
+        return incomingPackageRepository.findAll();
+    }
+    public List<OutgoingPackage> getAllOutgoingPackages() {
+        return outgoingPackageRepository.findAll();
     }
 
+    public List<IncomingPackage> findIncomingPackagesRegisteredByEmployee(Long employeeId) {
+        Optional<Employee> employee = employeeRepository.findById(employeeId);
+        if (employee.isPresent()) {
+            return incomingPackageRepository.findByRegisteredBy(employee.get());
+        } else {
+            return Collections.emptyList(); // Връщаме празен списък, ако служителят не съществува
+        }
+    }
 }

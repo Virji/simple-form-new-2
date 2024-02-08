@@ -4,7 +4,7 @@
     <title>Packages Report</title>
     <!-- Employee Selection Form -->
     <h1>Package Report - Packages Registered by Employee</h1>
-    <form method="post" action="/package/filterByEmployee">
+    <form method="post" action="/package/report/filterByEmployee">
         <label for="employeeId">Изберете служител:</label>
         <select id="employeeId" name="employeeId">
             <option value="">Изберете служител</option>
@@ -84,7 +84,6 @@
     </style>
 </head>
 <body>
-<h1>All Registered Incoming Packages</h1>
 <table>
     <thead>
     <tr>
@@ -98,32 +97,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr th:each="package : ${packages}">
-        <td th:text="${package.id}"></td>
-        <td th:text="${package.sender}"></td>
-        <td th:text="${package.recipient}"></td>
-        <td th:text="${package.deliveryAddress}"></td>
-        <td th:text="${package.weight}"></td>
-        <td th:text="${package.isOfficeDelivery ? 'Yes' : 'No'}"></td>
-        <td th:text="${package.price}"></td>
-    </tr>
-    </tbody>
-</table>
-<h1>All Registered Outgoing Packages</h1>
-<table>
-    <thead>
-    <tr>
-        <th>ID</th>
-        <th>Sender</th>
-        <th>Recipient</th>
-        <th>Delivery Address</th>
-        <th>Weight</th>
-        <th>Office Delivery</th>
-        <th>Price</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="package : ${outgoingPackages}">
+    <tr th:each="package : ${employee_packages}">
         <td th:text="${package.id}"></td>
         <td th:text="${package.sender}"></td>
         <td th:text="${package.recipient}"></td>
@@ -136,4 +110,3 @@
 </table>
 </body>
 </html>
-

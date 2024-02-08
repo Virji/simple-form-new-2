@@ -1,15 +1,16 @@
 package com.simpleform.controller;
 
+import com.simpleform.entity.Employee;
 import com.simpleform.entity.IncomingPackage;
+import com.simpleform.entity.OutgoingPackage;
+import com.simpleform.repository.EmployeeRepository;
 import com.simpleform.repository.IncomingPackageRepository;
+import com.simpleform.service.EmployeeService;
 import com.simpleform.service.PackageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -22,12 +23,19 @@ public class IncomingPackageController {
 
     @Autowired
     PackageService packageService;
+    @Autowired
+    EmployeeService employeeService;
+    @Autowired
+    IncomingPackageRepository incomingPackageRepository;
+    @Autowired
+    EmployeeRepository employeeRepository;
 
 
     @PostMapping("/add")
     public String addIncomingPackageAdmin(IncomingPackage incomingPackage_) {
         System.out.println("Received company data: " + incomingPackage_);
         packageService.addIncomingPackageAdmin(incomingPackage_);
+
         return "addPackage_page.html";
     }
 
@@ -149,8 +157,27 @@ public class IncomingPackageController {
 
     @GetMapping("/report")
     public String showPackageReport(Model model) {
-        List<IncomingPackage> packages = packageService.findAllIncomingPackages();
+        List<IncomingPackage> packages = packageService.getAllPackages();
         model.addAttribute("packages", packages);
+
+        List<OutgoingPackage> outgoingPackages = packageService.getAllOutgoingPackages();
+        model.addAttribute("outgoingPackages", outgoingPackages);
+
+        // Load employees and add them to the model
+        List<Employee> employees = employeeService.getAllEmployees();
+        model.addAttribute("employees", employees);
+
         return "package_report";
+    }
+
+    @PostMapping("/filterByEmployee")
+    public String filterPackageByEmployee(@RequestParam("employeeId") Long employeeId, Model model) {
+        List<IncomingPackage> employee_packages = packageService.findIncomingPackagesRegisteredByEmployee(employeeId);
+        model.addAttribute("employee_packages", employee_packages);
+
+        // Load employees and add them to the model
+        List<Employee> employees = employeeService.getAllEmployees();
+        model.addAttribute("employees", employees);
+        return "package_employee_report";
     }
 }

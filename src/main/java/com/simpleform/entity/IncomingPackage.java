@@ -1,9 +1,6 @@
 package com.simpleform.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
 public class IncomingPackage {
@@ -19,6 +16,9 @@ public class IncomingPackage {
     private Double price;
     private boolean isOfficeDelivery;
 
+    @ManyToOne
+    @JoinColumn(name = "employee_id") // Ако имате колона с име employee_id
+    private Employee registeredBy;
 
     public IncomingPackage() {
     }
@@ -29,8 +29,6 @@ public class IncomingPackage {
         this.deliveryAddress = deliveryAddress;
         this.weight = weight;
         this.isOfficeDelivery = isOfficeDelivery;
-
-
     }
 
     public int getId() {
@@ -83,6 +81,10 @@ public class IncomingPackage {
 
     public void setOfficeDelivery(boolean officeDelivery) {
         isOfficeDelivery = officeDelivery;
+    }
+
+    public void setRegisteredBy(Employee employee) {
+        this.registeredBy = employee;
     }
 
     @Override

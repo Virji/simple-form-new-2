@@ -83,10 +83,6 @@ public class IncomingPackage {
         isOfficeDelivery = officeDelivery;
     }
 
-    public void setRegisteredBy(Employee employee) {
-        this.registeredBy = employee;
-    }
-
     @Override
     public String toString() {
         return "IncomingPackage{" +

@@ -102,10 +102,6 @@ public class IncomingPackageController {
         return "searchIncomingPackage_page.html"; // make sure the view name is correct
     }
 
-
-
-
-
     @PostMapping("/update")
     public String updateCompany(@RequestParam("id") Integer id,
                                 @RequestParam(value = "sender", required = false) String sender,
@@ -145,7 +141,6 @@ public class IncomingPackageController {
             return "error_page.html"; // Error page
         }
     }
-
 
     @PostMapping("/delete")
     public String deletePackage(@RequestParam Integer id) {
